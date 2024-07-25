@@ -21,10 +21,10 @@ def extract_sales_records(json_data):
     return df
 
 #显示页面标题
-st.title('Temu销售订单数据提取工具')
+st.title('出海销售订单数据提取工具')
 
 # 提供一个多行文本框，用于输入JSON数据
-json_data = st.text_area('请输入JSON数据', height=300, help='请粘贴Temu销售订单数据的JSON格式数据')
+json_data = st.text_area('请输入JSON数据', height=300, help='请粘贴销售订单数据的JSON格式数据')
 
 # 增加一个勾选框，选择是否剔除salesNumber为0的记录
 remove_zero_sales = st.checkbox('剔除销售数量为0的记录', value=True)
