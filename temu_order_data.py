@@ -70,8 +70,8 @@ with col1:
 
         # 从df 的 0 行开始向下遍历，对于“周数”列，如果发现和上一行的周数部分不一样，在当前文本后增加一个“⭐️”，比较时不需要考虑“⭐️”
         for i in range(1, len(df)):
-            if df.iloc[i]['周数'].rstrip('⭐️') != df.iloc[i-1]['周数'].rstrip('⭐️'):
-                df.iloc[i, 0] = df.iloc[i, 0] + '⭐️'
+            if df.iloc[i]['周数'].rstrip('★') != df.iloc[i-1]['周数'].rstrip('★'):
+                df.iloc[i, 0] = df.iloc[i, 0] + '★'
                 
 
 with col2:
