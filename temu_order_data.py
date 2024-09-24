@@ -18,6 +18,15 @@ def extract_sales_records(json_data):
     # 选择需要的列
     df = df[['date', 'prodSkuId', 'salesNumber']]
 
+    # 在df 前增加一列，为当前的第几“周”
+    df['date'] = pd.to_datetime(df['date'])
+    df.insert(0, 'week', '2024-W' + ((df['date'] - pd.to_datetime('2024-01-01')).dt.days // 7 + 1).astype(str).str.zfill(2))
+
+    df = df[['week', 'date', 'prodSkuId', 'salesNumber']]
+
+    # date列仅保留年月日部分
+    df['date'] = df['date'].dt.strftime('%Y-%m-%d')
+    
     return df
 
 #显示页面标题
@@ -57,7 +66,13 @@ with col1:
             df = df[df['salesNumber'] > 0]
 
         # 对列更名
-        df.columns = ['日期', 'SKU ID', '销量']
+        df.columns = ['周数', '日期', 'SKU ID', '销量']
+
+        # 从df 的 0 行开始向下遍历，对于“周数”列，如果发现和上一行的周数部分不一样，在当前文本后增加一个“⭐️”，比较时不需要考虑“⭐️”
+        for i in range(1, len(df)):
+            if df.iloc[i]['周数'].rstrip('⭐️') != df.iloc[i-1]['周数'].rstrip('⭐️'):
+                df.iloc[i, 0] = df.iloc[i, 0] + '⭐️'
+                
 
 with col2:
     # 添加一个按钮，用于下载提取的数据，格式为xlsx
